@@ -61,10 +61,20 @@ install_phpmyadmin() {
     rcctl restart apache2
 }
 
+# Replace default index.html with index.php from repo
+replace_index() {
+    echo "Replacing /var/www/index.html with index.php from repo..."
+    rm -f /var/www/index.html
+    rm -f /var/www/htdocs/index.html
+    cp index.php /var/www/
+    cp index.php /var/www/htdocs
+}
+
 # Main process
 install_httpd
 install_mysql
 install_phpmyadmin
+replace_index
 rcctl restart apache2 ${PHP_DAEMON}
 
 echo "LAMPP setup complete! Access your project management at: http://localhost/"
