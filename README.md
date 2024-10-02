@@ -7,6 +7,7 @@ This repository contains a script to automate the setup of Apache, MySQL (MariaD
 - Configures **MariaDB (MySQL)** with PHP MySQL integration
 - Adds **phpMyAdmin** for easy database management
 - Example configuration files provided
+- Serve Projects on localhost in /var/www/htdocs
 
 ---
 
