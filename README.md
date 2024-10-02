@@ -34,40 +34,6 @@ An example httpd.conf file has been provided in the repository. You can copy thi
 cp httpd.conf /etc/httpd.conf
 
 
-
-
----
-
-Example httpd.conf
-
-# Basic Apache HTTP Server Configuration
-
-User root
-Group daemon
-
-ServerRoot "/usr/www/htdocs"
-Listen 80
-DocumentRoot "/var/www"
-DirectoryIndex index.html index.php
-
-<Directory "/var/www">
-    Options Indexes FollowSymLinks
-    AllowOverride None
-    Require all granted
-</Directory>
-
-ErrorLog "/var/log/httpd-error.log"
-CustomLog "/var/log/httpd-access.log" common
-
-LoadModule mime_module libexec/apache/httpd/modules/mod_mime.so
-LoadModule dir_module libexec/apache/httpd/modules/mod_dir.so
-LoadModule php_module libexec/apache/httpd/modules/libphp.so
-
-AddType application/x-httpd-php .php
-
-Feel free to modify this as needed for your own projects.
-
-
 ---
 
 Future Work
