@@ -64,9 +64,7 @@ install_phpmyadmin() {
 # Replace default index.html with index.php from repo
 replace_index() {
     echo "Replacing /var/www/index.html with index.php from repo..."
-    rm -f /var/www/index.html
     rm -f /var/www/htdocs/index.html
-    cp index.php /var/www/
     cp index.php /var/www/htdocs
 }
 
