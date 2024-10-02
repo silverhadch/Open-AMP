@@ -2,10 +2,12 @@
 // Function to execute shell commands safely
 function executeCommand($command) {
     // Allow only safe commands
-    $allowedCommands = ['start', 'stop', 'restart'];
+    $allowedServices = ['apache2', 'mysqld', 'php83_fpm'];
+    $allowedActions = ['start', 'stop', 'restart'];
+
     $parts = explode(' ', $command);
-    
-    if (in_array($parts[0], $allowedCommands)) {
+
+    if (in_array($parts[0], $allowedActions) && in_array($parts[1], $allowedServices)) {
         // Execute the command via rcctl and return output
         $output = shell_exec("rcctl $command 2>&1");
         return nl2br(htmlspecialchars($output));
@@ -72,8 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service'], $_POST['ac
     <div class="service">
         <h2>Control Services</h2>
         <form method="post">
-            <label for="service">Service Name:</label>
-            <input type="text" id="service" name="service" required>
+            <label for="service">Service:</label>
+            <select name="service" id="service" required>
+                <option value="apache2">Apache (apache2)</option>
+                <option value="mysqld">MySQL (mysqld)</option>
+                <option value="php83_fpm">PHP 8.3 FPM (php83_fpm)</option>
+            </select>
             <select name="action">
                 <option value="start">Start</option>
                 <option value="stop">Stop</option>
