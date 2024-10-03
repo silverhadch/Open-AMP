@@ -58,5 +58,3 @@ Contributions
 
 Contributions and feedback are welcome!
 
-You can copy and paste this Markdown directly into your GitHub README file. It will render correctly with headers, bullet points, and code blocks.
-
