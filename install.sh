@@ -39,12 +39,20 @@ install_mysql() {
     mysql -u root -p
 }
 
-# Function to install and configure PHP with PHP-FPM
-install_php() {
-    echo "Installing PHP and configuring PHP-FPM..."
+# Function to install PHP (only the base installation)
+install_php_base() {
+    echo "Installing PHP base..."
     pkg_add php php-fpm php-mysqli
+}
+
+# Function to customize PHP installation after version input
+customize_php_install() {
+    # Ask for the PHP version
+    read -p "Enter the PHP version you want to configure (e.g., 8.3): " PHP_VERSION
+    PHP_DAEMON="php$(echo $PHP_VERSION | tr -d .)_fpm"
 
     # Configure PHP for Apache and MySQL
+    echo "Customizing PHP for version $PHP_VERSION..."
     ln -sf /etc/php-${PHP_VERSION}.sample/mysql.ini /etc/php-${PHP_VERSION}/mysql.ini
     ln -sf /etc/php-${PHP_VERSION}.sample/mysqli.ini /etc/php-${PHP_VERSION}/mysqli.ini
     ln -sf /etc/php-${PHP_VERSION}.sample/fpm.conf /etc/php-${PHP_VERSION}/fpm.conf
@@ -55,7 +63,7 @@ install_php() {
 
     # Check if PHP-FPM started successfully
     if rcctl check ${PHP_DAEMON}; then
-        echo "PHP-FPM started successfully."
+        echo "PHP-FPM for version $PHP_VERSION started successfully."
     else
         echo "Failed to start PHP-FPM."
         exit 1
@@ -85,7 +93,8 @@ replace_index() {
 # Main Process
 install_httpd      # Install and configure Apache
 install_mysql      # Install and configure MySQL (MariaDB)
-install_php        # Install and configure PHP with FPM
+install_php_base   # Install base PHP without configuration
+customize_php_install # Configure PHP after asking for version
 install_phpmyadmin # Install and configure phpMyAdmin
 replace_index      # Replace index.html with index.php from repository
 
