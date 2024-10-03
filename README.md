@@ -23,12 +23,7 @@ Simply execute the script as root (via doas or sudo) to install and configure th
 
 doas ./setup.sh
 
-
-3. Manual Adjustments:
-The script uses version numbers that currently need to be adjusted manually. You can modify the script directly to align with the installed versions of PHP and other software. I plan to automate this in future releases.
-
-
-4. Example httpd.conf:
+3. Example httpd.conf:
 An example httpd.conf file has been provided in the repository. You can copy this to /etc/httpd.conf to start your server configuration.
 
 cp httpd.conf /etc/httpd.conf
@@ -38,8 +33,7 @@ cp httpd.conf /etc/httpd.conf
 
 Future Work
 
-Automate version detection for PHP, Apache, and MySQL to remove the need for manual version changes.
-
+Improving UI of Webinterface.
 
 
 ---
