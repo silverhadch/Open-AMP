@@ -44,12 +44,26 @@ install_php_base() {
     echo "Installing PHP base..."
     pkg_add php php-fpm php-mysqli
 }
-
+# Automatically detect the latest installed PHP version
+detect_php_version() {
+    echo "Detecting the latest PHP version..."
+    
+    # Look for directories in /etc that match 'php-X.X'
+    PHP_VERSION=$(ls /etc | grep -E '^php-[0-9]+\.[0-9]+$' | sed 's/php-//g' | sort -V | tail -n 1)
+    
+    if [ -z "$PHP_VERSION" ]; then
+        echo "No PHP version detected. Exiting..."
+        exit 1
+    else
+        echo "Detected PHP version: $PHP_VERSION"
+    fi
+    
+    PHP_DAEMON="php$(echo $PHP_VERSION | tr -d .)_fpm"
+}
 # Function to customize PHP installation after version input
 customize_php_install() {
-    # Ask for the PHP version
-    read -p "Enter the PHP version you want to configure (e.g., 8.3): " PHP_VERSION
-    PHP_DAEMON="php$(echo $PHP_VERSION | tr -d .)_fpm"
+
+    detect_php_version
 
     # Configure PHP for Apache and MySQL
     echo "Customizing PHP for version $PHP_VERSION..."
