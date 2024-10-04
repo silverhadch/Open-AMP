@@ -31,14 +31,14 @@ cp httpd.conf /etc/httpd.conf
 
 ---
 
-Future Work
+## Future Work
 
 Improving UI of Webinterface.
 
 
 ---
 
-Access
+## Access
 
 Once the script is complete, you can access your environment at:
 http://localhost/
@@ -48,7 +48,7 @@ http://localhost/phpMyAdmin
 
 ---
 
-Contributions
+## Contributions
 
 Contributions and feedback are welcome!
 
