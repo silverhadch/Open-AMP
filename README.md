@@ -26,9 +26,9 @@ Simply execute the script as root (via doas or sudo) to install and configure th
 
 3. Example httpd.conf:
 An example httpd.conf file has been provided in the repository. You can copy this to /etc/httpd.conf to start your server configuration.
-
-cp httpd.conf /etc/httpd.conf
-
+```sh
+   cp httpd.conf /etc/httpd.conf
+```
 
 ---
 
