@@ -32,7 +32,7 @@ An example `httpd.conf` file has been provided in the repository. You can copy t
 
 ## Future Work
 
-Bug Fixes and maybe more Features.
+Maybe more Features.
 
 ---
 
