@@ -18,33 +18,19 @@ function detectPhpVersion() {
     return null;
 }
 
-// Function to execute shell commands safely
-function executeCommand($command) {
-    // Allow only safe commands
-    $allowedServices = ['apache2', 'mysqld', 'php_fpm'];
-    $allowedActions = ['start', 'stop', 'restart'];
-
-    $parts = explode(' ', $command);
-
-    if (in_array($parts[0], $allowedActions) && in_array($parts[1], $allowedServices)) {
-        // Execute the command via rcctl and return output
-        $output = shell_exec("rcctl $command 2>&1");
-        return nl2br(htmlspecialchars($output));
-    } else {
-        return "Invalid command.";
-    }
+// Function to check the status of a service
+function checkServiceStatus($service) {
+    $status = shell_exec("rcctl check $service 2>&1");
+    return nl2br(htmlspecialchars($status));
 }
 
 // Detect installed PHP version
 $phpVersion = detectPhpVersion();
 $phpDaemon = $phpVersion ? "php" . str_replace('.', '', $phpVersion) . "_fpm" : null;
 
-// Handle service control requests
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service'], $_POST['action'])) {
-    $service = htmlspecialchars($_POST['service']);
-    $action = htmlspecialchars($_POST['action']);
-    $output = executeCommand("$action $service");
-}
+$apacheStatus = checkServiceStatus('apache2');
+$mysqlStatus = checkServiceStatus('mysqld');
+$phpStatus = $phpDaemon ? checkServiceStatus($phpDaemon) : 'No PHP version detected';
 ?>
 
 <!DOCTYPE html>
@@ -80,31 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service'], $_POST['ac
             padding: 20px;
         }
 
-        form {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        select, button {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
         .output {
             background-color: #f4f4f4;
             border-left: 5px solid #007BFF;
@@ -113,16 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service'], $_POST['ac
             border-radius: 5px;
             color: #333;
             white-space: pre-wrap;
-        }
-
-        a {
-            text-decoration: none;
-            color: #007BFF;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: #0056b3;
         }
 
         ul {
@@ -134,31 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service'], $_POST['ac
             margin: 8px 0;
         }
 
-        .link-button {
-            display: inline-block;
-            padding: 10px 15px;
-            border: 1px solid #007BFF;
-            border-radius: 5px;
-            background-color: #fff;
+        a {
+            text-decoration: none;
             color: #007BFF;
-            transition: background-color 0.3s, color 0.3s;
-            text-align: center;
+            transition: color 0.3s;
         }
 
-        .link-button:hover {
-            background-color: #007BFF;
-            color: #fff;
-        }
-
-        .responsive {
-            display: flex;
-            flex-direction: column;
-        }
-
-        @media (min-width: 768px) {
-            form {
-                flex-direction: row;
-            }
+        a:hover {
+            color: #0056b3;
         }
     </style>
 </head>
@@ -167,35 +101,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service'], $_POST['ac
     <div class="container">
         <h1>Open-AMP Control Panel</h1>
 
-        <!-- Service Control Card -->
+        <!-- Service Status Card -->
         <div class="card">
-            <h2>Control Services</h2>
-            <form method="post">
-                <div class="responsive">
-                    <label for="service">Service:</label>
-                    <select name="service" id="service" required>
-                        <option value="apache2">Apache (apache2)</option>
-                        <option value="mysqld">MySQL (mysqld)</option>
-                        <?php if ($phpDaemon): ?>
-                            <option value="<?php echo $phpDaemon; ?>">PHP <?php echo $phpVersion; ?> FPM (<?php echo $phpDaemon; ?>)</option>
-                        <?php else: ?>
-                            <option disabled>No PHP version detected</option>
-                        <?php endif; ?>
-                    </select>
-                </div>
-                <div class="responsive">
-                    <label for="action">Action:</label>
-                    <select name="action" id="action" required>
-                        <option value="start">Start</option>
-                        <option value="stop">Stop</option>
-                        <option value="restart">Restart</option>
-                    </select>
-                </div>
-                <button type="submit">Execute</button>
-            </form>
-            <?php if (isset($output)): ?>
-                <div class="output"><?php echo $output; ?></div>
-            <?php endif; ?>
+            <h2>Service Status</h2>
+            <div class="output">
+                <strong>Apache Status:</strong><br>
+                <?php echo $apacheStatus; ?>
+            </div>
+            <div class="output">
+                <strong>MySQL Status:</strong><br>
+                <?php echo $mysqlStatus; ?>
+            </div>
+            <div class="output">
+                <strong>PHP-FPM Status:</strong><br>
+                <?php echo $phpStatus; ?>
+            </div>
         </div>
 
         <!-- phpMyAdmin Access Card -->
