@@ -102,7 +102,7 @@ replace_index() {
     echo "Replacing /var/www/index.html with index.php from repository... and addding expect tool"
     rm -f /var/www/htdocs/index.html
     cp index.php /var/www/htdocs/
-    pkg_add expect
+
 }
 
 # Main Process
