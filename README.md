@@ -20,8 +20,9 @@ This repository contains a script to automate the setup of Apache, MySQL (MariaD
 
 2. Run the Setup Script:
 Simply execute the script as root (via doas or sudo) to install and configure the LAMPP environment.
-
-doas ./install.sh
+```sh
+   doas ./install.sh
+```
 
 3. Example httpd.conf:
 An example httpd.conf file has been provided in the repository. You can copy this to /etc/httpd.conf to start your server configuration.
