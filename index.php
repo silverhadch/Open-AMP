@@ -42,14 +42,21 @@ $phpStatus = $phpDaemon ? checkServiceStatus($phpDaemon) : 'No PHP version detec
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
+            background-color: #333; /* Darker background color */
             margin: 0;
             padding: 0;
         }
 
-        h1, h2 {
+        h1 {
             text-align: center;
-            color: #333;
+            color: orange; /* Title color set to orange */
+            font-size: 2.5em; /* Increased title size */
+            margin-bottom: 20px; /* Added space below the title */
+        }
+
+        h2 {
+            text-align: center;
+            color: #fff; /* White text for h2 */
         }
 
         .container {
@@ -59,7 +66,7 @@ $phpStatus = $phpDaemon ? checkServiceStatus($phpDaemon) : 'No PHP version detec
         }
 
         .card {
-            background-color: #fff;
+            background-color: #444; /* Changed card background color to match page background */
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
@@ -67,12 +74,12 @@ $phpStatus = $phpDaemon ? checkServiceStatus($phpDaemon) : 'No PHP version detec
         }
 
         .output {
-            background-color: #f4f4f4;
+            background-color: #444; /* Changed output background color */
             border-left: 5px solid #007BFF;
             padding: 10px;
             margin-top: 15px;
             border-radius: 5px;
-            color: #333;
+            color: #fff; /* Changed text color to white for better contrast */
             white-space: pre-wrap;
         }
 
@@ -94,12 +101,39 @@ $phpStatus = $phpDaemon ? checkServiceStatus($phpDaemon) : 'No PHP version detec
         a:hover {
             color: #0056b3;
         }
+
+        .ascii {
+            font-family: monospace; /* Use monospace font for ASCII */
+            text-align: center; /* Center the ASCII art */
+            white-space: pre; /* Preserve whitespace for ASCII art */
+            margin: 20px auto; /* Center and adjust margin for spacing */
+            position: relative; /* Enable offsetting */
+            left: -7%; /* Offset to center the ASCII */
+            font-size: 1.2em; /* Slightly increase size of ASCII art */
+        }
+
+        .yellow {
+            color: orange; /* Color for c1 */
+        }
+
+        .white {
+            color: white; /* Color for c2 */
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Open-AMP Control Panel</h1>
+        <div class="ascii"> 
+            <span class="yellow">    _____ </span><br>
+            <span class="yellow">  \\-     -/</span><br>
+            <span class="yellow">\\_/         \\</span><br>
+            <span class="yellow">  |        <span class="white">O O</span> |</span><br>
+            <span class="yellow">  |_  <   )  3 )</span><br>
+            <span class="yellow">  / \\         /</span><br>
+            <span class="yellow">    /-_____-\\</span>
+        </div>
 
         <!-- Service Status Card -->
         <div class="card">
