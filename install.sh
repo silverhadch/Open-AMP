@@ -41,8 +41,12 @@ install_mysql() {
 
 # Function to install PHP (only the base installation)
 install_php_base() {
-    echo "Installing PHP base..."
-    pkg_add php php-fpm php-mysqli
+    echo "Installing PHP base and extensions..."
+    pkg_add php php-fpm php-mysqli 
+    pkg_add php-pdo 
+    pkg_add php-intl 
+    pkg_add php-mbstring
+    pkg_add php-mysqlnd
 }
 # Automatically detect the latest installed PHP version
 detect_php_version() {
